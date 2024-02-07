@@ -1,12 +1,14 @@
 # Guide to Set Up a Go App
 
+## Inicializacion
+
 Primero de se debe inicializar la aplicacion de la siguiente forma:
 
 ```sh
 go mod init sample-app
 ```
 
-Con el comando anterior se creara un archivo `go.mod` en la raiz del proyecto, dicho archivo servira para tener el control de versiones y el manejo de paquetes y dependencias que se usaran en la aplicacion. Dicho archivo tendra un contenido similar a este:
+Con el comando anterior se creara el archivo `go.mod` en la raiz del proyecto, dicho archivo servira para tener el control de versiones y el manejo de paquetes y dependencias que se usaran en la aplicacion. Dicho archivo tendra un contenido similar a este:
 
 ```go
 module sample-app
@@ -19,7 +21,7 @@ require{
 }
 ```
 
-A continuacion se debe crear el archivo principal en donde se ejecutara la función de entrada del la aplicacion:
+A continuacion se debe crear el archivo principal en donde se ejecutara la función de entrada `main ( func main() )` de la aplicacion y donde se indica que este es el modulo **`main (package main)`**:
 
 ```go
 package main
@@ -31,16 +33,34 @@ func main() {
 }
 ```
 
+Para ejecutar la aplicacion y el codigo de esta, se usa el siguiente comando en la terminal:
+
+```sh
+# ejecutar
+go run .
+# o bien
+go run ./sample-app.go
+```
+
+Para compilar y construir el codigo de nuestra aplicacion se debe escribir en la terminal el siguiente comando:
+
+```sh
+go build sample-app.go
+```
+
+El comando anterior genera un archivo ejecutable como resultado de la operación.
+
+## Caracteristicas
+
 > [!NOTE]
 > Notas: El compilador de Go es estricto y no permitira que haya variables no usadas en el codigo que se ha escrito.
 
-> [!TIP]
-> Blanck Identifier: `_` es una guion bajo utilizado para obviar el uso de variables indefinidas dentro del codigo de `Go`.
+> [!TIP] > **Blanck Identifier**: `_` es una guion bajo utilizado para obviar el uso de variables indefinidas dentro del codigo de `Go`.
 
-Ademas de la funcion prindicipal es posible definir mas de una funcion de inicializacion en nuestra aplicacion, las funciones `init` se ejecutaran en roden y la funcion `main` de arriba hacia abajo segun se hayan definido, dichas funciones `init` son el lugar ideal para inicializar conexiones a bases de datos o cargar archivos de propiedades.
+Ademas de la funcion prindicipal es posible definir mas de una funcion de inicializacion en nuestra aplicacion, las funciones `init` se ejecutaran en roden junto con la funcion `main`, de arriba hacia abajo segun se hayan definido, dichas funciones `init` son el lugar ideal para inicializar conexiones a bases de datos o cargar archivos de propiedades.
 
 > [!WARNING]
-> Nota: las funciones `init` no pueden ser llamdas o referenciadas directamente en la funcion `main` de nuestra aplicacion.
+> Las funciones `init` no pueden ser llamadas o referenciadas directamente en la funcion `main` de nuestra aplicacion.
 
 ```go
 package main
@@ -84,20 +104,3 @@ func (h BasicHandler) ShowWrite(ctx echo. Context) error {
   return render(ctx, write.ShowWrite())
 }
 ```
-
-Para ejecutar la aplicacion y el codigo de esta, se usa el siguiente comando en la terminal:
-
-```sh
-# ejecutar
-go run .
-# o bien
-go run ./sample-app.go
-```
-
-Para construir y compilar el codigo de nuestra aplicacion se debe escribir en la terminal el siguiente comando:
-
-```sh
-go build sample-app.go
-```
-
-El comando anterior genera un archivo ejecutable como resultado de la operación.
